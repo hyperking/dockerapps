@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  nginx:
+    build: 
+      context: .
+      dockerfile: nginx-server
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./sites-enabled/thesignchef.conf:/etc/nginx/sites-enabled/thesignchef.conf
+      - ./apps:/apps
+    ports:
+      - 8000:70
+
+
+  php:
+    build: 
+      context: .
+      dockerfile: php-server
+    image: php:7-fpm
+    working_dir: /apps/thesignchef-new
+    volumes:
+      - ./apps:/apps
+    environment:
+      - "DB_PORT:3306"
+      - "DB_HOST:mariadb"
+    # command: ["composer", "install"]
+
+  mariadb:
+    build: 
+      context: .
+      dockerfile: mysql-server
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: thesignchef_new
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_USER: dockeruser
+      MYSQL_PASSWORD: docker123
+
+    ports:
+      - "3308:3306"
