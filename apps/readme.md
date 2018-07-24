@@ -1,0 +1,1 @@
+This folder stores all server websites and apps
