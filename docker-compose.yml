@@ -8,7 +8,7 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./sites-enabled/thesignchef.conf:/etc/nginx/sites-enabled/thesignchef.conf
+      - ./sites-enabled/devonapp.conf:/etc/nginx/sites-enabled/devonapp.conf
       - ./apps:/apps
     ports:
       - 8000:70
@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: php-server
     image: php:7-fpm
-    working_dir: /apps/thesignchef-new
+    working_dir: /apps/devonproject
     volumes:
       - ./apps:/apps
     environment:
@@ -34,7 +34,7 @@ services:
     volumes:
       - ./db:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: thesignchef_new
+      MYSQL_DATABASE: devons_db
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_USER: dockeruser
       MYSQL_PASSWORD: docker123
